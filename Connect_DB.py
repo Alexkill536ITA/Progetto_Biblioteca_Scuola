@@ -225,62 +225,86 @@ def edit_book(titolo,autore,genere,foto,disponibilità,id_Book):
 #-----------------------------------------------------------------------------#
 
 def delete_name_admin(name_admin,surname_Admin):
-    connection = Connect_db()
-    crsr = connection.cursor()
-    sql_command = "DELETE FROM maestre WHERE nome='"+ name_admin +"' AND surname='"+surname_Admin+"'"
-    crsr.execute(sql_command)
-    connection.commit()
-    connection.close()
+    if len(name_admin)>0 and type(name_admin) == str:
+        if len(surname_Admin)>0 and type(surname_Admin) == str:
+            connection = Connect_db()
+            crsr = connection.cursor()
+            sql_command = "DELETE FROM maestre WHERE nome='"+ name_admin +"' AND surname='"+surname_Admin+"'"
+            crsr.execute(sql_command)
+            connection.commit()
+            connection.close()
+        else:
+            return("Il valore inserito in COGNOME non valido / Campo Vuoto")
+    else:
+        return("Il valore inserito in NOME non valido / Campo Vuoto")
 
 #-----------------------------------------------------------------------------#
     
 def delete_name_client(name_Client,surname_Client):
-    connection = Connect_db()
-    crsr = connection.cursor()
-    sql_command = "DELETE FROM bambini WHERE nome='"+ name_Client +"' AND cognome='"+surname_Client+"'"
-    crsr.execute(sql_command)
-    connection.commit()
-    connection.close()
+    if len(name_Client)>0 and type(name_Client) == str:
+        if len(surname_Client)>0 and type(surname_Client) == str:
+            connection = Connect_db()
+            crsr = connection.cursor()
+            sql_command = "DELETE FROM bambini WHERE nome='"+ name_Client +"' AND cognome='"+surname_Client+"'"
+            crsr.execute(sql_command)
+            connection.commit()
+            connection.close()
+        else:
+            return("Il valore inserito in COGNOME non valido / Campo Vuoto")
+    else:
+        return("Il valore inserito in NOME non valido / Campo Vuoto")
 
 #-----------------------------------------------------------------------------#
 
 def delete_id_admin(id_Admin):
-    connection = Connect_db()
-    crsr = connection.cursor()
-    sql_command = "DELETE FROM maestre WHERE  id='"+ id_Admin +"'"
-    crsr.execute(sql_command)
-    connection.commit()
-    connection.close()
+    if len(id_Admin)>0:
+        connection = Connect_db()
+        crsr = connection.cursor()
+        sql_command = "DELETE FROM maestre WHERE  id='"+ id_Admin +"'"
+        crsr.execute(sql_command)
+        connection.commit()
+        connection.close()
+    else:
+        return("Il valore inserito nel campo ID_Admin è Vuoto")
 
 #-----------------------------------------------------------------------------#
 
 def delete_id_client(id_Clinet):
-    connection = Connect_db()
-    crsr = connection.cursor()
-    sql_command = "DELETE FROM bambini WHERE  id='"+ id_Clinet +"'"
-    crsr.execute(sql_command)
-    connection.commit()
-    connection.close()
+    if len(id_Clinet)>0:
+        connection = Connect_db()
+        crsr = connection.cursor()
+        sql_command = "DELETE FROM bambini WHERE  id='"+ id_Clinet +"'"
+        crsr.execute(sql_command)
+        connection.commit()
+        connection.close()
+    else:
+        return("Il valore inserito nel campo ID_Client è Vuoto")
 
 #-----------------------------------------------------------------------------#
 
 def delete_title_book(title_Book):
-    connection = Connect_db()
-    crsr = connection.cursor()
-    sql_command = "DELETE FROM libri WHERE titilo = '"+ title_Book +"'"
-    crsr.execute(sql_command)
-    connection.commit()
-    connection.close()
+    if len(title_Book)>0 and type(title_Book) == str:
+        connection = Connect_db()
+        crsr = connection.cursor()
+        sql_command = "DELETE FROM libri WHERE titilo = '"+ title_Book +"'"
+        crsr.execute(sql_command)
+        connection.commit()
+        connection.close()
+    else:
+        return("Il valore inserito in TITOLO non valido / Campo Vuoto")
 
 #-----------------------------------------------------------------------------#
 
 def delete_id_book(id_Book):
-    connection = Connect_db()
-    crsr = connection.cursor()
-    sql_command = "DELETE FROM libri WHERE id='"+ id_Book +"'"
-    crsr.execute(sql_command)
-    connection.commit()
-    connection.close()
+    if len(id_Book)>0:
+        connection = Connect_db()
+        crsr = connection.cursor()
+        sql_command = "DELETE FROM libri WHERE id='"+ id_Book +"'"
+        crsr.execute(sql_command)
+        connection.commit()
+        connection.close()
+    else:
+        return("Il valore inserito nel campo ID_Book è Vuoto")
 
 #----------------------------------------END----------------------------------#
 
@@ -289,18 +313,21 @@ def delete_id_book(id_Book):
 #-----------------------------------------------------------------------------#
 
 def delete_log_null(id_Client):
-    connection = Connect_db()
-    crsr = connection.cursor()
-    sql_command = "SELECT count*(codice_bambino) FROM prestiti WHERE id_bambino='"+id_Client+"'	AND data_restituzione=null"
-    crsr.execute(sql_command)
-    if len(crsr.fetchall())>0:
-        sql_command = "DELETE FROM prestiti WHERE codice_bambino ='"+id_Client+"'"
+    if len(id_Client)>0:
+        connection = Connect_db()
+        crsr = connection.cursor()
+        sql_command = "SELECT count*(codice_bambino) FROM prestiti WHERE id_bambino='"+id_Client+"'	AND data_restituzione=null"
         crsr.execute(sql_command)
-        sql_command = "DELETE FROM bambini WHERE id='"+id_Client+"'"
-        crsr.execute(sql_command)
-        connection.commit()
+        if len(crsr.fetchall())>0:
+            sql_command = "DELETE FROM prestiti WHERE codice_bambino ='"+id_Client+"'"
+            crsr.execute(sql_command)
+            sql_command = "DELETE FROM bambini WHERE id='"+id_Client+"'"
+            crsr.execute(sql_command)
+            connection.commit()
+        else:
+            return("Non sono presenti PRESTITI")
     else:
-        return("Non sono presenti PRESTITI")
+        return("Il valore inserito in COGNOME non valido / Campo Vuoto")
 
 #----------------------------------------END----------------------------------#
 
@@ -373,47 +400,68 @@ def show_logs_book():
 #-----------------------------------------------------------------------------#
 
 def filter_book(titolo):
-    connection = Connect_db()
-    crsr = connection.cursor()
-    sql_command = "SELECT id,titolo,autore,disponibilità,datainsterimento libri FROM libri WHERE titolo='"+ titolo +"'"
-    result = crsr.execute(sql_command)
-    return result
+    if len(titolo)>0 and type(titolo)==str:
+        connection = Connect_db()
+        crsr = connection.cursor()
+        sql_command = "SELECT id,titolo,autore,disponibilità,datainsterimento libri FROM libri WHERE titolo='"+ titolo +"'"
+        result = crsr.execute(sql_command)
+        return result
+    else:
+        return("Il valore inserito in TITOLO non valido / Campo Vuoto")
 
 #-----------------------------------------------------------------------------#
 
 def filter_name_to_Client(name_Client):
-    connection = Connect_db()
-    crsr = connection.cursor()
-    sql_command = "SELECT id,nome,cognome,classe,foto FROM bambini WHERE id ='"+name_Client+"'"
-    result = crsr.execute(sql_command)
-    return result
+    if len(name_Client)>0 and type(name_Client)==str:
+        connection = Connect_db()
+        crsr = connection.cursor()
+        sql_command = "SELECT id,nome,cognome,classe,foto FROM bambini WHERE id ='"+name_Client+"'"
+        result = crsr.execute(sql_command)
+        return result
+    else:
+        return("Il valore inserito in NOME non valido / Campo Vuoto")
 
 #-----------------------------------------------------------------------------#
 
 def filter_name_to_maestre(name_Admin):
-    connection = Connect_db()
-    crsr = connection.cursor()
-    sql_command = "SELECT id,nome,cognome,foto FROM maestre WHERE id='"+name_Admin+"'"
-    result = crsr.execute(sql_command)
-    return result
+    if len(name_Admin)>0 and type(name_Admin)==str:
+        connection = Connect_db()
+        crsr = connection.cursor()
+        sql_command = "SELECT id,nome,cognome,foto FROM maestre WHERE id='"+name_Admin+"'"
+        result = crsr.execute(sql_command)
+        return result
+    else:
+        return("Il valore inserito in NOME non valido / Campo Vuoto")
 
 #-----------------------------------------------------------------------------#
 
 def filter_Login_Client(name_Client,surname_Client):
-    connection = Connect_db()
-    crsr = connection.cursor()
-    sql_command = "SELECT * FROM bambini WHERE nome='"+name_Client+"' AND cognome='"+surname_Client+"'"
-    result = crsr.execute(sql_command)
-    return result
+    if len(name_Client)>0 and type(name_Client)==str:
+        if len(surname_Client)>0 and type(surname_Client)==str:
+            connection = Connect_db()
+            crsr = connection.cursor()
+            sql_command = "SELECT * FROM bambini WHERE nome='"+name_Client+"' AND cognome='"+surname_Client+"'"
+            result = crsr.execute(sql_command)
+            return result
+        else:
+            return("Il valore inserito in COGNOME non valido / Campo Vuoto")
+    else:
+        return("Il valore inserito in NOME non valido / Campo Vuoto")
 
 #-----------------------------------------------------------------------------#
 
 def filter_Login_maestre(name_Admin,password_Admin):
-    connection = Connect_db()
-    crsr = connection.cursor()
-    sql_command = "SELECT * FROM maestre WHERE nome='"+name_Admin+"' AND password='"+password_Admin+"'"
-    result = crsr.execute(sql_command)
-    return result
+    if len(name_Admin)>0 and type(name_Admin)==str:
+        if len(password_Admin)>0:
+            connection = Connect_db()
+            crsr = connection.cursor()
+            sql_command = "SELECT * FROM maestre WHERE nome='"+name_Admin+"' AND password='"+password_Admin+"'"
+            result = crsr.execute(sql_command)
+            return result
+        else:
+            return("Il valore inserito in PASSWORD non valido / Campo Vuoto")
+    else:
+        return("Il valore inserito in NOME non valido / Campo Vuoto")
 
 #------------------------------------END--------------------------------------#
 
@@ -421,30 +469,42 @@ def filter_Login_maestre(name_Admin,password_Admin):
 #                       Pretito e Restituzione DataBase                       #
 #-----------------------------------------------------------------------------#
 
-def add_logs_book(id_bimbo,id_libro):
-    connection = Connect_db()
-    crsr = connection.cursor()
-    sql_command = "INSERT INTO prestiti(codice_bambino,codice_libro,data_prestito) VALUES("+ id_bimbo +","+ id_libro +","+ time.strftime("%d/%m/%Y") +")"
-    crsr.execute(sql_command)
-    connection.commit()
+def add_logs_book(id_Client,id_Book):
+    if len(id_Client)>0:
+        if len(id_Book)>0:
+            connection = Connect_db()
+            crsr = connection.cursor()
+            sql_command = "INSERT INTO prestiti(codice_bambino,codice_libro,data_prestito) VALUES("+ id_Client +","+ id_Book +","+ time.strftime("%d/%m/%Y") +")"
+            crsr.execute(sql_command)
+            connection.commit()
 
-    sql_command = "UPDATE libri SET disponibilità = 0 WHERE id='"+id_libro+"'"
-    crsr.execute(sql_command)
-    connection.commit()
-    connection.close()
+            sql_command = "UPDATE libri SET disponibilità = 0 WHERE id='"+id_Book+"'"
+            crsr.execute(sql_command)
+            connection.commit()
+            connection.close()
+        else:
+            return("Il valore inserito in ID_Bimbo non valido / Campo Vuoto")
+    else:
+        return("Il valore inserito in ID_Libro non valido / Campo Vuoto")
 
 #-----------------------------------------------------------------------------#
 
 def romve_logs_book(id_Log,id_Book):
-    connection = Connect_db()
-    crsr = connection.cursor()
-    sql_command = "UPDATE prestiti SET data_restituzione = '"+ time.strftime("%d/%m/%Y") +"' WHERE id='"+id_Log+"'"
-    crsr.execute(sql_command)
-    connection.commit()
+    if len(id_Log)>0:
+        if len(id_Book):
+            connection = Connect_db()
+            crsr = connection.cursor()
+            sql_command = "UPDATE prestiti SET data_restituzione = '"+ time.strftime("%d/%m/%Y") +"' WHERE id='"+id_Log+"'"
+            crsr.execute(sql_command)
+            connection.commit()
 
-    sql_command = "UPDATE db_libri SET disponibilità = 1 WHERE id='"+id_Book+"'"
-    crsr.execute(sql_command)
-    connection.commit()
-    connection.close()    
+            sql_command = "UPDATE db_libri SET disponibilità = 1 WHERE id='"+id_Book+"'"
+            crsr.execute(sql_command)
+            connection.commit()
+            connection.close()
+        else:
+            return("Il valore inserito in ID_Libro non valido / Campo Vuoto")
+    else:
+        return("Il valore inserito in ID_Prestito non valido / Campo Vuoto")
 
 #----------------------------------------END----------------------------------#
