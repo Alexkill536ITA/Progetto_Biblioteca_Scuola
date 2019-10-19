@@ -148,12 +148,15 @@ def insert_client(cognome,nome,classe,anni,foto):
 #-----------------------------------------------------------------------------#
 
 def rest_admin(newpassword):
-    connection = Connect_db()
-    crsr = connection.cursor()
-    sql_command = "UPDATE db_admin, SET password = '"+ newpassword +"'"
-    crsr.execute(sql_command)
-    connection.commit()
-    connection.close()
+    if len(newpassword)>0 and len(newpassword)<=5:
+        connection = Connect_db()
+        crsr = connection.cursor()
+        sql_command = "UPDATE db_admin, SET password = '"+ newpassword +"'"
+        crsr.execute(sql_command)
+        connection.commit()
+        connection.close()
+    else:
+        return("Il valore inserito in PASSWORD non valido / Campo Vuoto")
 
 #-----------------------------------------------------------------------------#
 
@@ -182,7 +185,7 @@ def edit_client(cognome,nome,classe,anni,foto,id_Client):
 def edit_admin(nome,cognome,password,amministratore,id_Admin):
     if type(nome) == str and len(nome)>0:
         if type(cognome) == str and len(cognome)>0:
-            if type(password) == str and len(password)>0:
+            if type(password) == str and len(password)>0 and len(password)<=5:
                 connection = Connect_db()
                 crsr = connection.cursor()
                 sql_command = "UPDATE bambini SET nome='"+nome+"', cognome='"+cognome+"', password='"+password+"', amministratore='"+amministratore+"' WHERE id='"+id_Admin+"'"
@@ -198,7 +201,7 @@ def edit_admin(nome,cognome,password,amministratore,id_Admin):
 
 #-----------------------------------------------------------------------------#
 
-def edit_admin(titolo,autore,genere,foto,disponibilità,id_Book):
+def edit_book(titolo,autore,genere,foto,disponibilità,id_Book):
     if type(titolo) == str and len(titolo)>0:
         if type(autore) == str and len(autore)>0:
             if type(genere) == str and len(genere)>0:
