@@ -1,0 +1,52 @@
+#---Filtri e mostra tabelle-------------------------------------------------------------#
+
+## select* FROM libri 
+## select* FROM generi
+## select* FROM bambini
+## select* FROM maestre
+## SELECT name FROM sqlite_master where type= 'table' NOT IN(name = 'sqlite_sequence')
+
+## select id,titolo,autore,disponibilità,data insterimento libri from libri where titolo='?'
+## select id,nome,cognome  from bambini where nome='?' and cognome='?'
+## select id,nome,cognome,foto  from bambini where nome='?' and cognome='?'
+## select id,nome,cognome  from bambini where nome='?' 
+## select id,nome,cognome,foto  from bambini where nome='?'
+
+#---------------------------------------------------------------------------------------#
+
+#---Eliminazione------------------------------------------------------------------------#
+
+## delete from bambini where id='?'
+## delete from bambini where nome='?' and cognome='?'
+## delete from libri where id='?'
+## delete from libri where titolo='?'
+## delete from tabelle maestre where id='?'
+## delete from tabelle maestre where nome='?'
+
+#---------------------------------------------------------------------------------------#
+
+#---Inserimento e Update----------------------------------------------------------------#
+
+## update bambini set (cognome,nome,classe,anni,foto)where id='?'
+## insert into bambini (cognome,nome,classe,anni,foto) values ('?','?','?','?','?')
+## insert into libri(titolo,autore,genere,foto,disponibilità)values('?','?','?','?','?')
+## update libri set (titolo,autore,genere,foto,disponibilità) where id='?'
+## insert into maestre(nome,cognome,password,amministratore) values('?','?','?','?')
+## update maestre set(nome,cognome,password,amministratore) where id='?'
+
+#---------------------------------------------------------------------------------------#
+
+#---Gestione LOG------------------------------------------------------------------------#
+
+## insert into prestiti(codice_bambino,codice_libro,data_prestito) values('?','?','?') ; ----> update libri set (data_restituzione) values(false)
+## update prestiti set(data_restituzione) where id='?'; ----> update libri set (data_restituzione) values(true)
+
+#---------------------------------------------------------------------------------------#
+
+#---Eliminazione dai LOG----------------------------------------------------------------#
+
+## select count*(codice_bambino)from prestiti where id_bambino='?'	and data_restituzione=null
+## delete from prestiti where codice_bambino ='?'
+## delete from bambini where codice='?'
+
+#---------------------------------------------------------------------------------------#
