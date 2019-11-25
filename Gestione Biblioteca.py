@@ -583,9 +583,9 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.NUM_BOX_INT[y].addWidget(self.Id_log_INT[y])
                 self.verticalLayout_5.addLayout(self.NUM_BOX_INT[y])
                 
-                clickable(self.Cover_INT[y]).connect(lambda: self.Get_Id_Libro_INT(self.Id_INT,y,self.Id_log_INT))
-                clickable(self.label_INT[y]).connect(lambda: self.Get_Id_Libro_INT(self.Id_INT,y,self.Id_log_INT))
-                clickable(self.Id_INT[y]).connect(lambda: self.Get_Id_Libro_INT(self.Id_INT,y,self.Id_log_INT))
+                clickable(self.Cover_INT[y]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[y],self.Id_log_INT[y]))
+                clickable(self.label_INT[y]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[y],self.Id_log_INT[y]))
+                clickable(self.Id_INT[y]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[y],self.Id_log_INT[y]))
         cndb.close_db()
 
     #Seletore Libri Disponibili    
@@ -628,26 +628,25 @@ class MainWindow(QtWidgets.QMainWindow):
             self.NUM_Id_DSP[x].setText(str(data_4[x][0]))
             self.NUM_BOX_DSP[x].addWidget(self.NUM_Id_DSP[x])
             self.verticalLayout_6.addLayout(self.NUM_BOX_DSP[x])
-            self.INT_ID_Libro = self.NUM_Id_DSP[x].text()
-            clickable(self.NUM_Cover_DSP[x]).connect(lambda: self.Get_Id_Libro(self.INT_ID_Libro))
-            clickable(self.NUM_Label_DSP[x]).connect(lambda: self.Get_Id_Libro(self.INT_ID_Libro))
-            clickable(self.NUM_Id_DSP[x]).connect(lambda: self.Get_Id_Libro(self.INT_ID_Libro))
+            clickable(self.NUM_Cover_DSP[x]).connect(lambda x=x: self.Get_Id_Libro(self.NUM_Id_DSP[x]))
+            clickable(self.NUM_Label_DSP[x]).connect(lambda x=x: self.Get_Id_Libro(self.NUM_Id_DSP[x]))
+            clickable(self.NUM_Id_DSP[x]).connect(lambda x=x: self.Get_Id_Libro(self.NUM_Id_DSP[x]))
 
         cndb.close_db()
         
         self.centralWidget().setLayout(self.gridLayout)
         self.show()
 
-    def Get_Id_Libro_INT(self,_ogetto,_hit,_ogetto2):
+    def Get_Id_Libro_INT(self,_ogetto,_ogetto2):
         global id_libro, id_log, rest
-        id_libro = _ogetto[_hit].text()
-        id_log = _ogetto2[_hit].text()
+        id_libro = _ogetto.text()
+        id_log = _ogetto2.text()
         rest = True
         self.Info_prestito()
 
     def Get_Id_Libro(self,_ogetto):
         global id_libro,rest
-        id_libro = _ogetto
+        id_libro = _ogetto.text()
         rest = False
         self.Info_prestito()      
 
