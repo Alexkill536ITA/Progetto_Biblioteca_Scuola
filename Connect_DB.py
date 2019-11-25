@@ -87,7 +87,7 @@ def insert_book(Titolo,Autore,Genere,cover):
                 if type(cover) == str and len(cover)>0:
                     connection = Connect_db()
                     crsr = connection.cursor()
-                    sql_command = "INSERT INTO libri(titolo,autore,genere,foto,disponibile) VALUES ("+ Titolo +", "+ Autore + ", "+ Genere +", "+ cover +",1)"
+                    sql_command = "INSERT INTO libri(titolo,autore,genere,foto,disponibile) VALUES ('"+ Titolo +"', '"+ Autore + "', '"+ Genere +"', '"+ cover +"',1)"
                     crsr.execute(sql_command)
                     connection.commit()
                     connection.close()
@@ -113,11 +113,11 @@ def insert_admin(nome,cognome,password,amministratore):
                 connection.commit()
                 connection.close()
             else :
-                return("Il valore inserito in PASSWORD non valido / Campo Vuoto")
+                return("Il valore inserito in PASSWORD non valido")
         else :
-            return("Il valore inserito in COGNOME non valido / Campo Vuoto")
+            return("Il valore inserito in COGNOME non valido")
     else:
-        return("Il valore inserito in NOME non valido / Campo Vuoto")
+        return("Il valore inserito in NOME non valido")
 
 #-----------------------------------------------------------------------------#
 
@@ -128,7 +128,7 @@ def insert_client(cognome,nome,classe,anni,foto):
                 if type(anni) == str and len(anni)>0:
                     connection = Connect_db()
                     crsr = connection.cursor()
-                    sql_command = "INSERT INTO bambini (cognome,nome,classe,anni,foto) VALUES ('"+cognome+"','"+nome+"','"+classe+"',"+anni+","+foto+")"
+                    sql_command = "INSERT INTO bambini (cognome,nome,classe,anni,foto) VALUES ('"+cognome+"','"+nome+"','"+classe+"',"+anni+",'"+foto+"')"
                     crsr.execute(sql_command)
                     connection.commit()
                     connection.close()
@@ -348,7 +348,7 @@ def show_admin():
     connection = Connect_db()
     crsr = connection.cursor()
     #sql_command = "SELECT * FROM db_admin" #Tutti i campi
-    sql_command = "SELECT id,cognome,nome,amministatore FROM maestre"
+    sql_command = "SELECT id,cognome,nome,amministratore FROM maestre"
     result = crsr.execute(sql_command)
     return result
 
@@ -393,8 +393,8 @@ def show_logs_book():
 def show_libri_inpossesso(id_bambino):
     connection = Connect_db()
     crsr = connection.cursor()
-    sql_command = "SELECT * FROM PRESTITI WHERE codice_bambino=?"
-    result = crsr.execute(sql_command,(id_bambino))
+    sql_command = "SELECT * FROM PRESTITI WHERE codice_bambino='"+id_bambino+"'"
+    result = crsr.execute(sql_command)
     return result
 
 #-----------------------------------------------------------------------------#
@@ -604,7 +604,7 @@ def add_logs_book(id_Client,id_Book):
             connection.commit()
 
             connection = Connect_db()
-            sql_command = "UPDATE libri SET disponibile = 0 WHERE id='"+id_Book+"'"
+            sql_command = "UPDATE libri SET disponibile=0 WHERE id='"+id_Book+"'"
             crsr.execute(sql_command)
             connection.commit()
             connection.close()
@@ -625,7 +625,7 @@ def romve_logs_book(id_Log,id_Book):
             connection.commit()
 
             connection = Connect_db()
-            sql_command = "UPDATE libri SET disponibile = 1 WHERE id='"+id_Book+"'"
+            sql_command = "UPDATE libri SET disponibile=1 WHERE id='"+id_Book+"'"
             crsr.execute(sql_command)
             connection.commit()
             connection.close()

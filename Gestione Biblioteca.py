@@ -406,7 +406,7 @@ class MainWindow(QtWidgets.QMainWindow):
         #mostra il tutto
         self.show()
     
-#finzione mostra dati bimbo-----------------------------------------------------ATENZIONE-BUGS
+#funzione mostra dati bimbo
     def Dati_Bimbo(self):
         self.setCentralWidget(QtWidgets.QWidget(self))
         self.gridLayout = QtWidgets.QGridLayout()
@@ -531,61 +531,64 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             img = Root+data[0][5]
         self.Img_avatar.setPixmap(QtGui.QPixmap(img))
-        id_temp = str(data[0][0])
         id_bimbo = str(data[0][0])
     
     #Seletore Libri da Restituire
-        result_2 = cndb.show_libri_inpossesso(id_temp)
+        result_2 = cndb.show_libri_inpossesso(id_bimbo)
         data_2 = tuple(result_2.fetchall())
         self.NUM_BOX_INT = [""]
         self.Cover_INT = [""]
         self.label_INT = [""]
         self.Id_INT = [""]
         self.Id_log_INT = [""]
+        ts = 0
         for y in range(len(data_2)):
             result_3 = cndb.show_book_by_ID(str(data_2[y][2]))
             data_3 = tuple(result_3.fetchall())
             if data_2[y][4] == None:
-                self.NUM_BOX_INT.insert(y,QtWidgets.QHBoxLayout())
-                self.NUM_BOX_INT[y].setObjectName("BOX_INT_"+str(y))
-                self.Cover_INT.insert(y, QtWidgets.QLabel(self.scrollAreaWidgetContents_INT))
-                self.Cover_INT[y].setMinimumSize(QtCore.QSize(160, 0))
-                self.Cover_INT[y].setMaximumSize(QtCore.QSize(160, 95))
-                self.Cover_INT[y].setStyleSheet("background-color:white;")
-                self.Cover_INT[y].setText("")
-                self.Cover_INT[y].setObjectName("Cover_INT_"+str(y))
+                self.NUM_BOX_INT.insert(ts,QtWidgets.QHBoxLayout())
+                self.NUM_BOX_INT[ts].setObjectName("BOX_INT_"+str(ts))
+                self.Cover_INT.insert(ts, QtWidgets.QLabel(self.scrollAreaWidgetContents_INT))
+                self.Cover_INT[ts].setMinimumSize(QtCore.QSize(160, 0))
+                self.Cover_INT[ts].setMaximumSize(QtCore.QSize(160, 95))
+                self.Cover_INT[ts].setStyleSheet("background-color:white;")
+                self.Cover_INT[ts].setText("")
+                self.Cover_INT[ts].setObjectName("Cover_INT_"+str(ts))
+                self.Cover_INT[ts].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
                 if(data_3[0][4] == None):
                     img = "Icons/book.png"
                 else:
                     img = Root+data_3[0][4]
-                self.Cover_INT[y].setPixmap(QtGui.QPixmap(img))
-                self.Cover_INT[y].setScaledContents(True)
-                self.NUM_BOX_INT[y].addWidget(self.Cover_INT[y])
-                self.label_INT.insert(y, QtWidgets.QLabel(self.scrollAreaWidgetContents_INT))
-                self.label_INT[y].setMinimumSize(QtCore.QSize(170, 50))
-                self.label_INT[y].setMaximumSize(QtCore.QSize(16777215, 95))
-                self.label_INT[y].setObjectName("label_INT_"+str(y))
-                self.label_INT[y].setText(data_3[0][1])
-                self.NUM_BOX_INT[y].addWidget(self.label_INT[y])
-                self.Id_INT.insert(y, QtWidgets.QLabel(self.scrollAreaWidgetContents_DSP))
-                self.Id_INT[y].setMinimumSize(QtCore.QSize(16777215, 50))
-                self.Id_INT[y].setMaximumSize(QtCore.QSize(16777215, 95))
-                self.Id_INT[y].setObjectName("Id_INT"+str(y))
-                self.Id_INT[y].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-                self.Id_INT[y].setText(str(data_3[0][0]))
-                self.NUM_BOX_INT[y].addWidget(self.Id_INT[y])
-                self.Id_log_INT.insert(y, QtWidgets.QLabel(self.scrollAreaWidgetContents_DSP))
-                self.Id_log_INT[y].setMinimumSize(QtCore.QSize(16777215, 50))
-                self.Id_log_INT[y].setMaximumSize(QtCore.QSize(16777215, 95))
-                self.Id_log_INT[y].setObjectName("Id_Log_INT"+str(y))
-                self.Id_log_INT[y].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-                self.Id_log_INT[y].setText(str(data_2[y][0]))
-                self.NUM_BOX_INT[y].addWidget(self.Id_log_INT[y])
-                self.verticalLayout_5.addLayout(self.NUM_BOX_INT[y])
+                self.Cover_INT[ts].setPixmap(QtGui.QPixmap(img))
+                self.Cover_INT[ts].setScaledContents(True)
+                self.NUM_BOX_INT[ts].addWidget(self.Cover_INT[ts])
+                self.label_INT.insert(ts, QtWidgets.QLabel(self.scrollAreaWidgetContents_INT))
+                self.label_INT[ts].setMinimumSize(QtCore.QSize(170, 50))
+                self.label_INT[ts].setMaximumSize(QtCore.QSize(16777215, 95))
+                self.label_INT[ts].setObjectName("label_INT_"+str(ts))
+                self.label_INT[ts].setText(data_3[0][1])
+                self.NUM_BOX_INT[ts].addWidget(self.label_INT[ts])
+                self.Id_INT.insert(ts, QtWidgets.QLabel(self.scrollAreaWidgetContents_DSP))
+                self.Id_INT[ts].setMinimumSize(QtCore.QSize(16777215, 50))
+                self.Id_INT[ts].setMaximumSize(QtCore.QSize(16777215, 95))
+                self.Id_INT[ts].setObjectName("Id_INT"+str(ts))
+                self.Id_INT[ts].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+                self.Id_INT[ts].setText(str(data_3[0][0]))
+                self.NUM_BOX_INT[ts].addWidget(self.Id_INT[ts])
+                self.Id_log_INT.insert(ts, QtWidgets.QLabel(self.scrollAreaWidgetContents_DSP))
+                self.Id_log_INT[ts].setMinimumSize(QtCore.QSize(16777215, 50))
+                self.Id_log_INT[ts].setMaximumSize(QtCore.QSize(16777215, 95))
+                self.Id_log_INT[ts].setObjectName("Id_Log_INT"+str(ts))
+                self.Id_log_INT[ts].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+                self.Id_log_INT[ts].setText(str(data_2[y][0]))
+                self.NUM_BOX_INT[ts].addWidget(self.Id_log_INT[ts])
+                self.verticalLayout_5.addLayout(self.NUM_BOX_INT[ts])
                 
-                clickable(self.Cover_INT[y]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[y],self.Id_log_INT[y]))
-                clickable(self.label_INT[y]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[y],self.Id_log_INT[y]))
-                clickable(self.Id_INT[y]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[y],self.Id_log_INT[y]))
+                clickable(self.Cover_INT[ts]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[ts],self.Id_log_INT[ts]))
+                clickable(self.label_INT[ts]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[ts],self.Id_log_INT[ts]))
+                clickable(self.Id_INT[ts]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[ts],self.Id_log_INT[ts]))
+            else:
+                ts = ts-1
         cndb.close_db()
 
     #Seletore Libri Disponibili    
@@ -770,7 +773,7 @@ class MainWindow(QtWidgets.QMainWindow):
         data = tuple(result.fetchall())
         self.label_3.setText("Titolo: "+data[0][1])
         self.label_4.setText("Autore: "+data[0][2])
-        if(data[0][3] == 0):
+        if(data[0][3] == 7):
             self.label_5.setText("Genere: SENTIMENTI")
         elif(data[0][3] == 2):
             self.label_5.setText("Genere: SCIENZE")
@@ -933,7 +936,6 @@ class MainWindow(QtWidgets.QMainWindow):
         if(active_mod == True):
             self.conferma.clicked.connect(self.modifica_bambino)
         else:
-            self.Clear_Variabili_Glogals()
             self.conferma.clicked.connect(self.inserimento_nuovo_bambino)
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap("Icons/iconfinder_Checkmark_1891021.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -1007,11 +1009,21 @@ class MainWindow(QtWidgets.QMainWindow):
         nome = self.Edit_nome.text()
         cognome = self.Edit_cognome.text()
         classe = self.Edit_classe.text()
-        anni = self.Edit_anni()
-        if (len(nome)>0 and len(cognome)>0 and len(classe) and len(anni)>0):
-            cndb.insert_client(cognome,nome,classe,anni,New_Patch_avatar)
+        anni = self.Edit_anni.text()
+        if(New_Patch_avatar == ""):
+            Cover = Root+"\\Icons\\book.png"
         else:
-            self.error
+            Cover = New_Patch_avatar
+        if (len(nome)>0 and len(cognome)>0 and len(classe) and len(anni)>0):
+            cndb.insert_client(cognome,nome,classe,anni,Cover)
+            self.Pannello_amministrativo()
+        else:
+            mes =QtWidgets.QMessageBox()
+            mes.setWindowTitle("Attenzione")
+            mes.setText("Riempire tutti i campi")
+            mes.setIcon(QtWidgets.QMessageBox.Warning)
+            mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            mes.exec_()
     
     def modifica_bambino(self,id_Client):
         global New_Patch_avatar,active_mod
@@ -1112,6 +1124,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.comboBox.addItem("Racconti")
         self.comboBox.addItem("Storie")
         self.comboBox.addItem("Cibo")
+        self.comboBox.currentTextChanged.connect(self.Select_genere)
         self.verticalLayout.addWidget(self.comboBox)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
@@ -1181,56 +1194,66 @@ class MainWindow(QtWidgets.QMainWindow):
         global genere
         sel = self.comboBox.currentText()
         if(sel == "Sentimentale"):
-            genere = "Sentimentale"
+            genere = "1"
             return 0
         if(sel == "Scienze"):
-            genere = "Scienze"
+            genere = "2"
             return 0
         if(sel == "Animali"):
-            genere = "Animali"
+            genere = "3"
             return 0
         if(sel== "Racconti"):
-            genere = "Racconti"
+            genere = "4"
             return 0
         if(sel == "Storie"):
-            genere = "Storie"
+            genere = "5"
             return 0
         if(sel == "Cibo"):
-            genere = "Cibo"
+            genere = "6"
             return 0
         if(sel == ""):
-            genere = ""
+            genere = "7"
         else:
             print("ERROR")
     
     def inserimento_nuovo_libro(self):
         global New_Patch_Cover, genere
-        titolo = self.Edit_nome.text()
+        titolo = self.Edit_titolo.text()
         autore = self.Edit_autore.text()
-        if (len(titolo)>0 and len(autore)>0 and len(genere)):
-            cndb.insert_book(titolo,autore,genere,New_Patch_Cover)
+        if(New_Patch_Cover == ""):
+            Cover = Root+"\\Icons\\book.png"
         else:
-            self.error
+            Cover = New_Patch_Cover
+        if len(titolo)>0:
+            cndb.insert_book(titolo,autore,genere,Cover)
+            self.Pannello_amministrativo()
+        else:
+            mes =QtWidgets.QMessageBox()
+            mes.setWindowTitle("Attenzione")
+            mes.setText("Riempire Il campo TITOLO ")
+            mes.setIcon(QtWidgets.QMessageBox.Warning)
+            mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            mes.exec_()
     
     def Carica_items_libro(self):
-        global New_Patch_Cover, Root, id_libro
+        global Root, id_libro
         result = cndb.filter_ID_book(id_libro)
         data = tuple(result.fetchall())
         self.Edit_titolo.setText(data[0][1])
         self.Edit_autore.setText(data[0][2])
-        if(data[0][3] == "Sentimentale"):
+        if(data[0][3] == "1"):
             self.comboBox.itemText(1)
-        elif(data[0][3] == "Scienze"):
+        elif(data[0][3] == "2"):
             self.comboBox.itemText(2)
-        elif(data[0][3] == "Animali"):
+        elif(data[0][3] == "3"):
             self.comboBox.itemText(3)
-        elif(data[0][3] == "Racconti"):
+        elif(data[0][3] == "4"):
             self.comboBox.itemText(4)
-        elif(data[0][3] == "Storie"):
+        elif(data[0][3] == "5"):
             self.comboBox.itemText(5)
-        elif(data[0][3] == "Cibo"):
+        elif(data[0][3] == "6"):
             self.comboBox.itemText(6)
-        else:
+        elif(data[0][3] == "7"):
             self.comboBox.itemText(0)
         if(data[0][4]==None):
             img = Root+"\\Icons\\book.png"
@@ -1241,11 +1264,19 @@ class MainWindow(QtWidgets.QMainWindow):
         cndb.close_db()
 
     def modifica_libro(self):
-        global New_Patch_Cover, id_libro
+        global New_Patch_Cover, id_libro, genere
         titolo = self.Edit_titolo.text()
         autroe = self.Edit_autore.text()
-        genere = self.comboBox.currentText()
-        cndb.edit_book(titolo,autroe,genere,New_Patch_Cover,id_libro)
+        if len(titolo)>0:
+            cndb.edit_book(titolo,autroe,genere,New_Patch_Cover,id_libro)
+            self.Pannello_amministrativo()
+        else:
+            mes =QtWidgets.QMessageBox()
+            mes.setWindowTitle("Attenzione")
+            mes.setText("Riempire Il campo TITOLO ")
+            mes.setIcon(QtWidgets.QMessageBox.Warning)
+            mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            mes.exec_()
 
 #Inserimento profilo Maestre
     def inserimento_new_profilo_A(self):
@@ -1346,10 +1377,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.checkBox.setMaximumSize(QtCore.QSize(300, 23))
         self.checkBox.setStyleSheet("border-radius:5px;border:1px solid grey;background-color:white;")
         self.checkBox.setObjectName("checkBox")
-        if(admin == True):
-            self.checkBox.setEnabled
-        else:
-            self.checkBox.setDisabled
+        self.checkBox.setEnabled
         self.verticalLayout.addWidget(self.checkBox)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
@@ -1414,10 +1442,28 @@ class MainWindow(QtWidgets.QMainWindow):
         password = self.Edit_Password.text()
         password_ver = self.Edit_Password_ver.text()
         amministratore = self.checkBox.checkState()
-        if(password == password_ver):
-            cndb.insert_admin(nome,cognome,password,amministratore)
+        if(len(nome)>0 and len(cognome)>0 and len(password)>0 and len(password_ver)>0):
+            if(amministratore == 2):
+                amministratore = "1"
+            else:
+                amministratore = "0"
+            if(password == password_ver):
+                cndb.insert_admin(nome,cognome,password,amministratore)
+                self.Pannello_amministrativo()
+            else:
+                mes =QtWidgets.QMessageBox()
+                mes.setWindowTitle("Attenzione")
+                mes.setText("La Password inserita non combacia")
+                mes.setIcon(QtWidgets.QMessageBox.Warning)
+                mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                mes.exec_()
         else:
-            self.errore
+            mes =QtWidgets.QMessageBox()
+            mes.setWindowTitle("Attenzione")
+            mes.setText("Riempire tutti i campi")
+            mes.setIcon(QtWidgets.QMessageBox.Warning)
+            mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            mes.exec_()
 
     def Carica_items_maestre(self):
         global id_Maestra
@@ -1425,7 +1471,10 @@ class MainWindow(QtWidgets.QMainWindow):
         data = tuple(result1.fetchall())
         self.Edit_nome.setText(data[0][1])
         self.Edit_cognome.setText(data[0][2])
-        self.checkBox.setCheckState(data[0][4])
+        if data[0][4] == 1:
+            self.checkBox.setChecked(True)
+        else:
+            self.checkBox.setChecked(False)
         cndb.close_db()
 
 
@@ -1436,10 +1485,28 @@ class MainWindow(QtWidgets.QMainWindow):
         password = self.Edit_Password.text()
         password_ver = self.Edit_Password_ver.text()
         amministratore = self.checkBox.checkState()
-        if(password == password_ver):
-            cndb.edit_admin(nome,cognome,password,amministratore,id_Maestra)
+        if(len(nome)>0 and len(cognome)>0 and len(password)>0 and len(password_ver)>0):
+            if(amministratore == 2):
+                amministratore = "1"
+            else:
+                amministratore = "0"
+            if(password == password_ver):
+                cndb.edit_admin(nome,cognome,password,amministratore,id_Maestra)
+                self.Pannello_amministrativo()
+            else:
+                mes =QtWidgets.QMessageBox()
+                mes.setWindowTitle("Attenzione")
+                mes.setText("La Password inserita non combacia")
+                mes.setIcon(QtWidgets.QMessageBox.Warning)
+                mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                mes.exec_()
         else:
-            self.errore
+            mes =QtWidgets.QMessageBox()
+            mes.setWindowTitle("Attenzione")
+            mes.setText("Riempire tutti i campi")
+            mes.setIcon(QtWidgets.QMessageBox.Warning)
+            mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            mes.exec_()
 
 #Pannello amministrativo
     def Pannello_amministrativo(self):
@@ -1655,10 +1722,10 @@ class MainWindow(QtWidgets.QMainWindow):
             return 0
         else:
             print("ERROR")
+        cndb.close_db()
               
     def Show_Table(self, table):
         result = table
-        print(result)
         self.tableView.setColumnCount(6)
         self.tableView.setRowCount(0)
         for row_index, row_data in enumerate(result):
@@ -1673,7 +1740,6 @@ class MainWindow(QtWidgets.QMainWindow):
             return "errore"
         id_linea = self.tableView.currentItem().row()
         id_Finale = self.tableView.item(id_linea,0).text()
-        print(id_Finale)
         active_mod = True
         if(type_modifica == 0):
             id_bimbo = id_Finale
@@ -1690,45 +1756,49 @@ class MainWindow(QtWidgets.QMainWindow):
     def cerca_per(self):
         global type_modifica
         selc = self.Parametro_key.text()
-        if(selc != ""):
-            if(type_modifica == 0):
+        if(type_modifica == 0):
+            if(selc != ""):
                 if(self.Parametro_ricerca.currentText()=="nome"):
                     self.Show_Table(cndb.filter_name_to_Client(selc))
                 elif(self.Parametro_ricerca.currentText()=="cognome"):
                     self.Show_Table(cndb.filter_cognome_to_Client(selc))
                 elif(self.Parametro_ricerca.currentText()=="classe"):
                     self.Show_Table(cndb.filter_classe_to_Client(selc))
-                elif(self.Parametro_ricerca.currentText()=="tutto"):
-                    self.Show_Table(cndb.show_client())
-                colum_text = ["","","","","",""]
-                self.tableView.setHorizontalHeaderLabels(colum_text)
-                colum_text = ["ID","COGNOME","NOME","CLASSE","ANNI","FOTO"]
-                self.tableView.setHorizontalHeaderLabels(colum_text)
-            if(type_modifica == 1):
+            if(self.Parametro_ricerca.currentText()=="tutto"):
+                self.Show_Table(cndb.show_client())
+            colum_text = ["","","","","",""]
+            self.tableView.setHorizontalHeaderLabels(colum_text)
+            colum_text = ["ID","COGNOME","NOME","CLASSE","ANNI","FOTO"]
+            self.tableView.setHorizontalHeaderLabels(colum_text)
+        if(type_modifica == 1):
+            if(selc != ""):
                 if(self.Parametro_ricerca.currentText()=="nome"):
                     self.Show_Table(cndb.filter_name_to_maestre(selc))
                 elif(self.Parametro_ricerca.currentText()=="cognome"):
                     self.Show_Table(cndb.filter_cognome_to_maestre(selc))
-                elif(self.Parametro_ricerca.currentText()=="tutto"):
-                    self.Show_Table(cndb.show_admin())
-                colum_text = ["","","","","",""]
-                self.tableView.setHorizontalHeaderLabels(colum_text)
-                colum_text = ["ID","COGNOME","NOME","AMMINISTRETORE",]
-                self.tableView.setHorizontalHeaderLabels(colum_text)
-            if(type_modifica == 2):
+            if(self.Parametro_ricerca.currentText()=="tutto"):
+                self.Show_Table(cndb.show_admin())
+            colum_text = ["","","","","",""]
+            self.tableView.setHorizontalHeaderLabels(colum_text)
+            colum_text = ["ID","COGNOME","NOME","AMMINISTRATORE",]
+            self.tableView.setHorizontalHeaderLabels(colum_text)
+        if(type_modifica == 2):
+            if(selc != ""):
                 if(self.Parametro_ricerca.currentText()=="titolo"):
                     self.Show_Table(cndb.filter_book(selc))
                 elif(self.Parametro_ricerca.currentText()=="autore"):
                     self.Show_Table(cndb.filter_to_autore_book(selc))
-                elif(self.Parametro_ricerca.currentText()=="disponibilità"):
-                    self.Show_Table(cndb.show_book_Disponibili())
-                elif(self.Parametro_ricerca.currentText()=="tutto"):
-                    self.Show_Table(cndb.show_book())
-                colum_text = ["","","","","",""]
-                self.tableView.setHorizontalHeaderLabels(colum_text)
-                colum_text = ["ID","TITOLO","AUTORE","GENERE","COVER","DISPONILE"]
-                self.tableView.setHorizontalHeaderLabels(colum_text)
+
+            if(self.Parametro_ricerca.currentText()=="disponibilità"):
+                self.Show_Table(cndb.show_book_Disponibili())
+            elif(self.Parametro_ricerca.currentText()=="tutto"):
+                self.Show_Table(cndb.show_book())
+            colum_text = ["","","","","",""]
+            self.tableView.setHorizontalHeaderLabels(colum_text)
+            colum_text = ["ID","TITOLO","AUTORE","GENERE","COVER","DISPONILE"]
+            self.tableView.setHorizontalHeaderLabels(colum_text)
     
+        
     def elimina_per(self):
         global type_modifica, admin, Root
         if(admin == True):
@@ -1761,7 +1831,9 @@ class MainWindow(QtWidgets.QMainWindow):
             msgBox.setWindowIcon(QtGui.QIcon("Icons/iconfinder_ic_info_48px_3669162.png"))
             msgBox.setText("Non hai il permesso di effetura questa operazione")
             msgBox.setInformativeText("")
-            msgBox.setIcon(QtWidgets.QMessageBox.warning)
+            msgBox.setIcon(QtWidgets.QMessageBox.Warning)
+            msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            msgBox.exec_()
         
 #richiamo della classe MainWindow, apertura della finestra, e stile
 app = QtWidgets.QApplication(sys.argv)
