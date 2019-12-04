@@ -27,6 +27,7 @@ genere = ""
 type_modifica = 0
 active_mod = False
 rest = False
+memora_page = "Bambini"
 
 #Widget To Make Clickable
 def clickable(widget):
@@ -57,14 +58,14 @@ class MainWindow(QtWidgets.QMainWindow):
         file = bar.addMenu("File")
 
         #comando nuovo utente
-        new_user_action = QtWidgets.QAction("Nuovo utente", self)
-        new_user_action.setShortcut('Ctrl+N')
-        file.addAction(new_user_action)
+        #new_user_action = QtWidgets.QAction("Nuovo utente", self)
+        #new_user_action.setShortcut('Ctrl+N')
+        #file.addAction(new_user_action)
 
         #comando cancella utente
-        del_user_action = QtWidgets.QAction("Cancella utente", self)
-        del_user_action.setShortcut('Ctrl+D')
-        file.addAction(del_user_action)
+        #del_user_action = QtWidgets.QAction("Cancella utente", self)
+        #del_user_action.setShortcut('Ctrl+D')
+        #file.addAction(del_user_action)
 
         #comando esci dal programma
         quit_action = QtWidgets.QAction('Esci', self)
@@ -536,59 +537,59 @@ class MainWindow(QtWidgets.QMainWindow):
     #Seletore Libri da Restituire
         result_2 = cndb.show_libri_inpossesso(id_bimbo)
         data_2 = tuple(result_2.fetchall())
-        self.NUM_BOX_INT = [""]
-        self.Cover_INT = [""]
-        self.label_INT = [""]
-        self.Id_INT = [""]
-        self.Id_log_INT = [""]
-        ts = 0
-        for y in range(len(data_2)):
-            result_3 = cndb.show_book_by_ID(str(data_2[y][2]))
+        self.NUM_BOX_INT = []
+        self.Cover_INT = []
+        self.label_INT = []
+        self.Id_INT = []
+        self.Id_log_INT = []
+        self.data_2_1 = []
+        for z in range(len(data_2)):
+            if data_2[z][4] == None:
+                self.data_2_1.append(str(data_2[z][2]))
+
+        for y in range(len(self.data_2_1)):
+            result_3 = cndb.show_book_by_ID(self.data_2_1[y])
             data_3 = tuple(result_3.fetchall())
-            if data_2[y][4] == None:
-                self.NUM_BOX_INT.insert(ts,QtWidgets.QHBoxLayout())
-                self.NUM_BOX_INT[ts].setObjectName("BOX_INT_"+str(ts))
-                self.Cover_INT.insert(ts, QtWidgets.QLabel(self.scrollAreaWidgetContents_INT))
-                self.Cover_INT[ts].setMinimumSize(QtCore.QSize(160, 0))
-                self.Cover_INT[ts].setMaximumSize(QtCore.QSize(160, 95))
-                self.Cover_INT[ts].setStyleSheet("background-color:white;")
-                self.Cover_INT[ts].setText("")
-                self.Cover_INT[ts].setObjectName("Cover_INT_"+str(ts))
-                self.Cover_INT[ts].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-                if(data_3[0][4] == None):
-                    img = "Icons/book.png"
-                else:
-                    img = Root+data_3[0][4]
-                self.Cover_INT[ts].setPixmap(QtGui.QPixmap(img))
-                self.Cover_INT[ts].setScaledContents(True)
-                self.NUM_BOX_INT[ts].addWidget(self.Cover_INT[ts])
-                self.label_INT.insert(ts, QtWidgets.QLabel(self.scrollAreaWidgetContents_INT))
-                self.label_INT[ts].setMinimumSize(QtCore.QSize(170, 50))
-                self.label_INT[ts].setMaximumSize(QtCore.QSize(16777215, 95))
-                self.label_INT[ts].setObjectName("label_INT_"+str(ts))
-                self.label_INT[ts].setText(data_3[0][1])
-                self.NUM_BOX_INT[ts].addWidget(self.label_INT[ts])
-                self.Id_INT.insert(ts, QtWidgets.QLabel(self.scrollAreaWidgetContents_DSP))
-                self.Id_INT[ts].setMinimumSize(QtCore.QSize(16777215, 50))
-                self.Id_INT[ts].setMaximumSize(QtCore.QSize(16777215, 95))
-                self.Id_INT[ts].setObjectName("Id_INT"+str(ts))
-                self.Id_INT[ts].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-                self.Id_INT[ts].setText(str(data_3[0][0]))
-                self.NUM_BOX_INT[ts].addWidget(self.Id_INT[ts])
-                self.Id_log_INT.insert(ts, QtWidgets.QLabel(self.scrollAreaWidgetContents_DSP))
-                self.Id_log_INT[ts].setMinimumSize(QtCore.QSize(16777215, 50))
-                self.Id_log_INT[ts].setMaximumSize(QtCore.QSize(16777215, 95))
-                self.Id_log_INT[ts].setObjectName("Id_Log_INT"+str(ts))
-                self.Id_log_INT[ts].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-                self.Id_log_INT[ts].setText(str(data_2[y][0]))
-                self.NUM_BOX_INT[ts].addWidget(self.Id_log_INT[ts])
-                self.verticalLayout_5.addLayout(self.NUM_BOX_INT[ts])
-                
-                clickable(self.Cover_INT[ts]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[ts],self.Id_log_INT[ts]))
-                clickable(self.label_INT[ts]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[ts],self.Id_log_INT[ts]))
-                clickable(self.Id_INT[ts]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[ts],self.Id_log_INT[ts]))
+            self.NUM_BOX_INT.insert(y,QtWidgets.QHBoxLayout())
+            self.NUM_BOX_INT[y].setObjectName("BOX_INT_"+str(y))
+            self.Cover_INT.insert(y, QtWidgets.QLabel(self.scrollAreaWidgetContents_INT))
+            self.Cover_INT[y].setMinimumSize(QtCore.QSize(160, 0))
+            self.Cover_INT[y].setMaximumSize(QtCore.QSize(160, 95))
+            self.Cover_INT[y].setStyleSheet("background-color:white;")
+            self.Cover_INT[y].setText("")
+            self.Cover_INT[y].setObjectName("Cover_INT_"+str(y))
+            self.Cover_INT[y].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+            if(data_3[0][4] == None):
+                img = "Icons/book.png"
             else:
-                ts = ts-1
+                img = Root+data_3[0][4]
+            self.Cover_INT[y].setPixmap(QtGui.QPixmap(img))
+            self.Cover_INT[y].setScaledContents(True)
+            self.NUM_BOX_INT[y].addWidget(self.Cover_INT[y])
+            self.label_INT.insert(y, QtWidgets.QLabel(self.scrollAreaWidgetContents_INT))
+            self.label_INT[y].setMinimumSize(QtCore.QSize(170, 50))
+            self.label_INT[y].setMaximumSize(QtCore.QSize(16777215, 95))
+            self.label_INT[y].setObjectName("label_INT_"+str(y))
+            self.label_INT[y].setText(data_3[0][1])
+            self.NUM_BOX_INT[y].addWidget(self.label_INT[y])
+            self.Id_INT.insert(y, QtWidgets.QLabel(self.scrollAreaWidgetContents_DSP))
+            self.Id_INT[y].setMinimumSize(QtCore.QSize(16777215, 50))
+            self.Id_INT[y].setMaximumSize(QtCore.QSize(16777215, 95))
+            self.Id_INT[y].setObjectName("Id_INT"+str(y))
+            self.Id_INT[y].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+            self.Id_INT[y].setText(str(data_3[0][0]))
+            self.NUM_BOX_INT[y].addWidget(self.Id_INT[y])
+            self.Id_log_INT.insert(y, QtWidgets.QLabel(self.scrollAreaWidgetContents_DSP))
+            self.Id_log_INT[y].setMinimumSize(QtCore.QSize(16777215, 50))
+            self.Id_log_INT[y].setMaximumSize(QtCore.QSize(16777215, 95))
+            self.Id_log_INT[y].setObjectName("Id_Log_INT"+str(self.data_2_1[y][0]))
+            self.Id_log_INT[y].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+            self.Id_log_INT[y].setText(str(self.data_2_1[y][0]))
+            self.NUM_BOX_INT[y].addWidget(self.Id_log_INT[y])
+            self.verticalLayout_5.addLayout(self.NUM_BOX_INT[y])
+            clickable(self.Cover_INT[y]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[y],self.Id_log_INT[y]))
+            clickable(self.label_INT[y]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[y],self.Id_log_INT[y]))
+            clickable(self.Id_INT[y]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[y],self.Id_log_INT[y]))
         cndb.close_db()
 
     #Seletore Libri Disponibili    
@@ -804,12 +805,40 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def prendi_libro(self):
         global id_bimbo, id_libro
-        cndb.add_logs_book(id_bimbo,id_libro)
+        mesag = cndb.add_logs_book(id_bimbo,id_libro)
+        if mesag == 1:            
+            mes =QtWidgets.QMessageBox()
+            mes.setWindowTitle("Operazione Completata")
+            mes.setText("Grazie per aver preso il libro")
+            mes.setIcon(QtWidgets.QMessageBox.Information)
+            mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            mes.exec_()
+        else:
+            mes =QtWidgets.QMessageBox()
+            mes.setWindowTitle("ERRORE")
+            mes.setText("Ho no, qualcosa è andato storto")
+            mes.setIcon(QtWidgets.QMessageBox.Critical)
+            mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            mes.exec_()
         self.Dati_Bimbo()
     
     def restituisci_libro(self):
         global id_libro, id_log, rest
-        cndb.romve_logs_book(id_log,id_libro)
+        mesag = cndb.romve_logs_book(id_log,id_libro)
+        if mesag == 1:            
+            mes =QtWidgets.QMessageBox()
+            mes.setWindowTitle("Operazione Completata")
+            mes.setText("Grazie per aver restituito il libro")
+            mes.setIcon(QtWidgets.QMessageBox.Information)
+            mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            mes.exec_()
+        else:
+            mes =QtWidgets.QMessageBox()
+            mes.setWindowTitle("ERRORE")
+            mes.setText("Ho no, qualcosa è andato storto")
+            mes.setIcon(QtWidgets.QMessageBox.Critical)
+            mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            mes.exec_()
         rest = False
         self.Dati_Bimbo()
 
@@ -988,21 +1017,23 @@ class MainWindow(QtWidgets.QMainWindow):
             Patch_avatar = "Icons/bimbo.png"
         else:
             Patch_avatar = Root+str(data[0][5])
+            New_Patch_avatar = str(data[0][5])
         self.pixMap = QtGui.QPixmap(Patch_avatar)
         self.Avatar.setPixmap(QtGui.QPixmap(self.pixMap))
         cndb.close_db()
 
 
     def getAvatar(self):
-        global New_Patch_avatar
+        global New_Patch_avatar,Root
         options = QFileDialog.Options()
         img,_ = QFileDialog.getOpenFileName(None, 'QFileDialog.getOpenFileName()', '', 'Images (*.png *.jpeg *.jpg *.bmp *.gif)', options=options)
-        FullName_Avatar = img.split('/')
-        Ultimo = len(FullName_Avatar)-1
-        shutil.copy(img, Root+"\\Avatar\\"+FullName_Avatar[Ultimo])
-        New_Patch_avatar = "\\Avatar\\"+FullName_Avatar[Ultimo]
-        self.pixMap = QtGui.QPixmap(img)
-        self.Avatar.setPixmap(QtGui.QPixmap(self.pixMap))
+        if img != "":    
+            FullName_Avatar = img.split('/')
+            Ultimo = len(FullName_Avatar)-1
+            shutil.copy(img, Root+"\\Avatar\\"+FullName_Avatar[Ultimo])
+            New_Patch_avatar = "\\Avatar\\"+FullName_Avatar[Ultimo]
+            self.pixMap = QtGui.QPixmap(img)
+            self.Avatar.setPixmap(QtGui.QPixmap(self.pixMap))
 
     def inserimento_nuovo_bambino(self):
         global New_Patch_avatar
@@ -1011,11 +1042,25 @@ class MainWindow(QtWidgets.QMainWindow):
         classe = self.Edit_classe.text()
         anni = self.Edit_anni.text()
         if(New_Patch_avatar == ""):
-            Cover = Root+"\\Icons\\book.png"
+            Cover = "\\Icons\\bimbo.png"
         else:
             Cover = New_Patch_avatar
         if (len(nome)>0 and len(cognome)>0 and len(classe) and len(anni)>0):
-            cndb.insert_client(cognome,nome,classe,anni,Cover)
+            mesag = cndb.insert_client(cognome,nome,classe,anni,Cover)
+            if mesag == 1:            
+                mes =QtWidgets.QMessageBox()
+                mes.setWindowTitle("Operazione Completata")
+                mes.setText("Aggunto nuovo Bimbo al Database")
+                mes.setIcon(QtWidgets.QMessageBox.Information)
+                mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                mes.exec_()
+            else:
+                mes =QtWidgets.QMessageBox()
+                mes.setWindowTitle("ERRORE")
+                mes.setText("Qualcosa è andato storto")
+                mes.setIcon(QtWidgets.QMessageBox.Critical)
+                mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                mes.exec_()
             self.Pannello_amministrativo()
         else:
             mes =QtWidgets.QMessageBox()
@@ -1025,14 +1070,33 @@ class MainWindow(QtWidgets.QMainWindow):
             mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
             mes.exec_()
     
-    def modifica_bambino(self,id_Client):
-        global New_Patch_avatar,active_mod
+    def modifica_bambino(self):
+        global New_Patch_avatar,active_mod,id_bimbo
         cognome = self.Edit_cognome.text()
         nome = self.Edit_nome.text()
         classe = self.Edit_classe.text()
         anni = self.Edit_anni.text()
-        cndb.edit_client(cognome,nome,classe,anni,New_Patch_avatar,id_Client)
+        if(New_Patch_avatar == ""):
+            Cover = "\\Icons\\bimbo.png"
+        else:
+            Cover = New_Patch_avatar
+        mesag = cndb.edit_client(cognome,nome,classe,anni,Cover,id_bimbo)
+        if mesag == 1:            
+            mes =QtWidgets.QMessageBox()
+            mes.setWindowTitle("Operazione Completata")
+            mes.setText("Modifica del Profilo Completata")
+            mes.setIcon(QtWidgets.QMessageBox.Information)
+            mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            mes.exec_()
+        else:
+            mes =QtWidgets.QMessageBox()
+            mes.setWindowTitle("ERRORE")
+            mes.setText("Qualcosa è andato storto")
+            mes.setIcon(QtWidgets.QMessageBox.Critical)
+            mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            mes.exec_()
         active_mod = False
+        self.Pannello_amministrativo()
     
 #Inserimento dei libri
     def Inserimeto_libri(self):
@@ -1115,7 +1179,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.comboBox.setMinimumSize(QtCore.QSize(300, 0))
         self.comboBox.setMaximumSize(QtCore.QSize(300, 16777215))
         self.comboBox.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.comboBox.setStyleSheet("border-radius:5px;border:1px solid grey;background-color:white;")
         self.comboBox.setObjectName("comboBox")
         self.comboBox.addItem("")
         self.comboBox.addItem("Sentimentale")
@@ -1126,6 +1189,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.comboBox.addItem("Cibo")
         self.comboBox.currentTextChanged.connect(self.Select_genere)
         self.verticalLayout.addWidget(self.comboBox)
+        self.Edit_disponibilita = QtWidgets.QCheckBox()
+        self.Edit_disponibilita.setMinimumSize(QtCore.QSize(300, 23))
+        self.Edit_disponibilita.setMaximumSize(QtCore.QSize(300, 23))
+        self.Edit_disponibilita.setStyleSheet("border-radius:5px;border:1px solid grey;background-color:white;")
+        self.Edit_disponibilita.setObjectName("Edit_disponibilita")
+        self.Edit_disponibilita.setEnabled
+        self.verticalLayout.addWidget(self.Edit_disponibilita)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         spacerItem2 = QtWidgets.QSpacerItem(200, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
@@ -1170,6 +1240,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.caricafotoprofilo.setText("carica foto profilo")
         self.Edit_titolo.setPlaceholderText("Titolo")
         self.Edit_autore.setPlaceholderText("autore")
+        self.Edit_disponibilita.setText("Disponibile")
         self.conferma.setText("conferma")
         self.indietro.setText("← indietro")
 
@@ -1183,12 +1254,15 @@ class MainWindow(QtWidgets.QMainWindow):
         global New_Patch_Cover
         options = QFileDialog.Options()
         img,_ = QFileDialog.getOpenFileName(None, 'QFileDialog.getOpenFileName()', '', 'Images (*.png *.jpeg *.jpg *.bmp *.gif)', options=options)
-        FullName_Cover = img.split('/')
-        Ultimo = len(FullName_Cover)-1
-        shutil.copy(img, Root+"\\Cover\\"+FullName_Cover[Ultimo])
-        New_Patch_Cover = "\\Cover\\"+FullName_Cover[Ultimo]
-        self.pixMap = QtGui.QPixmap(img)
-        self.Avatar.setPixmap(QtGui.QPixmap(self.pixMap))
+        if img != "":
+            FullName_Cover = img.split('/')
+            Ultimo = len(FullName_Cover)-1
+            esite = os.path.isfile(Root+"\\Cover\\"+FullName_Cover[Ultimo])
+            if esite == False:
+                shutil.copy(img, Root+"\\Cover\\"+FullName_Cover[Ultimo])
+            New_Patch_Cover = "\\Cover\\"+FullName_Cover[Ultimo]
+            self.pixMap = QtGui.QPixmap(img)
+            self.Avatar.setPixmap(QtGui.QPixmap(self.pixMap))
     
     def Select_genere(self):
         global genere
@@ -1220,12 +1294,31 @@ class MainWindow(QtWidgets.QMainWindow):
         global New_Patch_Cover, genere
         titolo = self.Edit_titolo.text()
         autore = self.Edit_autore.text()
+        disponibilita = self.Edit_disponibilita.checkState()
         if(New_Patch_Cover == ""):
-            Cover = Root+"\\Icons\\book.png"
+            Cover = "\\Icons\\book.png"
         else:
             Cover = New_Patch_Cover
         if len(titolo)>0:
-            cndb.insert_book(titolo,autore,genere,Cover)
+            if(disponibilita == 2):
+                disponibilita = "1"
+            else:
+                disponibilita = "0"
+            mesag  = cndb.insert_book(titolo,autore,genere,Cover,disponibilita)
+            if mesag == 1:            
+                mes =QtWidgets.QMessageBox()
+                mes.setWindowTitle("Operazione Completata")
+                mes.setText("Aggunto nuovo Libro al Database")
+                mes.setIcon(QtWidgets.QMessageBox.Information)
+                mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                mes.exec_()
+            else:
+                mes =QtWidgets.QMessageBox()
+                mes.setWindowTitle("ERRORE")
+                mes.setText("Qualcosa è andato storto")
+                mes.setIcon(QtWidgets.QMessageBox.Critical)
+                mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                mes.exec_()
             self.Pannello_amministrativo()
         else:
             mes =QtWidgets.QMessageBox()
@@ -1241,24 +1334,28 @@ class MainWindow(QtWidgets.QMainWindow):
         data = tuple(result.fetchall())
         self.Edit_titolo.setText(data[0][1])
         self.Edit_autore.setText(data[0][2])
-        if(data[0][3] == "1"):
+        if(data[0][3] == 1):
             self.comboBox.itemText(1)
-        elif(data[0][3] == "2"):
+        elif(data[0][3] == 2):
             self.comboBox.itemText(2)
-        elif(data[0][3] == "3"):
+        elif(data[0][3] == 3):
             self.comboBox.itemText(3)
-        elif(data[0][3] == "4"):
+        elif(data[0][3] == 4):
             self.comboBox.itemText(4)
-        elif(data[0][3] == "5"):
+        elif(data[0][3] == 5):
             self.comboBox.itemText(5)
-        elif(data[0][3] == "6"):
+        elif(data[0][3] == 6):
             self.comboBox.itemText(6)
-        elif(data[0][3] == "7"):
+        elif(data[0][3] == 7):
             self.comboBox.itemText(0)
         if(data[0][4]==None):
             img = Root+"\\Icons\\book.png"
         else:
             img = Root+str(data[0][4])
+        if data[0][5] == 1:
+            self.Edit_disponibilita.setChecked(True)
+        else:
+            self.Edit_disponibilita.setChecked(False)
         self.pixMap = QtGui.QPixmap(img)
         self.Avatar.setPixmap(QtGui.QPixmap(self.pixMap))
         cndb.close_db()
@@ -1267,8 +1364,31 @@ class MainWindow(QtWidgets.QMainWindow):
         global New_Patch_Cover, id_libro, genere
         titolo = self.Edit_titolo.text()
         autroe = self.Edit_autore.text()
+        disponibilita = self.Edit_disponibilita.checkState()
+        if(New_Patch_Cover == ""):
+            Cover = "\\Icons\\book.png"
+        else:
+            Cover = New_Patch_Cover
         if len(titolo)>0:
-            cndb.edit_book(titolo,autroe,genere,New_Patch_Cover,id_libro)
+            if(disponibilita == 2):
+                disponibilita = "1"
+            else:
+                disponibilita = "0"
+            mesag = cndb.edit_book(titolo,autroe,genere,Cover,disponibilita,id_libro)
+            if mesag == 1:            
+                mes =QtWidgets.QMessageBox()
+                mes.setWindowTitle("Operazione Completata")
+                mes.setText("Modifica del Libro Completata")
+                mes.setIcon(QtWidgets.QMessageBox.Information)
+                mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                mes.exec_()
+            else:
+                mes =QtWidgets.QMessageBox()
+                mes.setWindowTitle("ERRORE")
+                mes.setText("Qualcosa è andato storto")
+                mes.setIcon(QtWidgets.QMessageBox.Critical)
+                mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                mes.exec_()
             self.Pannello_amministrativo()
         else:
             mes =QtWidgets.QMessageBox()
@@ -1356,8 +1476,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.Edit_Password.setStyleSheet("border-radius:5px;border:1px solid grey;background-color:white;")
         self.Edit_Password.setAlignment(QtCore.Qt.AlignCenter)
         self.Edit_Password.setObjectName("Edit_Password")
+        self.Edit_Password.setEchoMode(QtWidgets.QLineEdit.Password)
         self.verticalLayout.addWidget(self.Edit_Password)
-
         self.Edit_Password_ver = QtWidgets.QLineEdit(self.frame)
         self.Edit_Password_ver.setMinimumSize(QtCore.QSize(300, 0))
         self.Edit_Password_ver.setMaximumSize(QtCore.QSize(300, 16777215))
@@ -1371,6 +1491,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.Edit_Password_ver.setStyleSheet("border-radius:5px;border:1px solid grey;background-color:white;")
         self.Edit_Password_ver.setAlignment(QtCore.Qt.AlignCenter)
         self.Edit_Password_ver.setObjectName("Edit_Password_ver")
+        self.Edit_Password_ver.setEchoMode(QtWidgets.QLineEdit.Password)
         self.verticalLayout.addWidget(self.Edit_Password_ver)
         self.checkBox = QtWidgets.QCheckBox(self.frame)
         self.checkBox.setMinimumSize(QtCore.QSize(300, 23))
@@ -1448,7 +1569,21 @@ class MainWindow(QtWidgets.QMainWindow):
             else:
                 amministratore = "0"
             if(password == password_ver):
-                cndb.insert_admin(nome,cognome,password,amministratore)
+                mesag = cndb.insert_admin(nome,cognome,password,amministratore)
+                if mesag == 1:            
+                    mes =QtWidgets.QMessageBox()
+                    mes.setWindowTitle("Operazione Completata")
+                    mes.setText("Aggunta nuova Maestra al Database")
+                    mes.setIcon(QtWidgets.QMessageBox.Information)
+                    mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                    mes.exec_()
+                else:
+                    mes =QtWidgets.QMessageBox()
+                    mes.setWindowTitle("ERRORE")
+                    mes.setText("Qualcosa è andato storto")
+                    mes.setIcon(QtWidgets.QMessageBox.Critical)
+                    mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                    mes.exec_()
                 self.Pannello_amministrativo()
             else:
                 mes =QtWidgets.QMessageBox()
@@ -1471,6 +1606,7 @@ class MainWindow(QtWidgets.QMainWindow):
         data = tuple(result1.fetchall())
         self.Edit_nome.setText(data[0][1])
         self.Edit_cognome.setText(data[0][2])
+        self.Edit_Password.setText(data[0][3])
         if data[0][4] == 1:
             self.checkBox.setChecked(True)
         else:
@@ -1491,7 +1627,21 @@ class MainWindow(QtWidgets.QMainWindow):
             else:
                 amministratore = "0"
             if(password == password_ver):
-                cndb.edit_admin(nome,cognome,password,amministratore,id_Maestra)
+                mesag = cndb.edit_admin(nome,cognome,password,amministratore,id_Maestra)
+                if mesag == 1:            
+                    mes =QtWidgets.QMessageBox()
+                    mes.setWindowTitle("Operazione Completata")
+                    mes.setText("Modifica del profilo Completata")
+                    mes.setIcon(QtWidgets.QMessageBox.Information)
+                    mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                    mes.exec_()
+                else:
+                    mes =QtWidgets.QMessageBox()
+                    mes.setWindowTitle("ERRORE")
+                    mes.setText("Qualcosa è andato storto")
+                    mes.setIcon(QtWidgets.QMessageBox.Critical)
+                    mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                    mes.exec_()
                 self.Pannello_amministrativo()
             else:
                 mes =QtWidgets.QMessageBox()
@@ -1601,7 +1751,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.comboBox.addItem("Maestre")
         self.comboBox.addItem("Libri")
         self.comboBox.addItem("Prestiti")
-        self.comboBox.currentTextChanged.connect(self.Table_Select_SQL)
+        if memora_page == "Bambini":
+            self.comboBox.setCurrentIndex(0)
+        elif memora_page == "Maestre":
+            self.comboBox.setCurrentIndex(1)
+        elif memora_page == "Libri":
+            self.comboBox.setCurrentIndex(2)
+        elif memora_page == "Prestiti":
+            self.comboBox.setCurrentIndex(3)
         self.horizontalLayout.addWidget(self.comboBox)
         self.gridLayout.addLayout(self.horizontalLayout, 1, 0, 1, 1)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
@@ -1646,7 +1803,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.Cerca.setObjectName("Cerca")
         self.horizontalLayout_3.addWidget(self.Cerca)
         self.gridLayout.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
-
         self.exit_Indietro.setText("Esci e Trona al Menu")
         self.Inserisci_maestra.setText("Inserisci Maestra")
         self.Inserisci_bimbo.setText("Inserisci Bimbo")
@@ -1666,16 +1822,31 @@ class MainWindow(QtWidgets.QMainWindow):
         self.Elimina.clicked.connect(self.elimina_per)
         self.exit_Indietro.clicked.connect(self.finestra1)
         self.Cerca.clicked.connect(self.cerca_per)
+        self.comboBox.currentTextChanged.connect(self.Pre_Select)
 
-        self.Table_Select_SQL()
+        self.Table_Select_SQL()       
         self.centralWidget().setLayout(self.gridLayout)
         self.show()
 
+    def Pre_Select(self):
+        global memora_page
+        sel_db = self.comboBox.currentText()
+        if sel_db == "Bambini":
+            memora_page = "Bambini"
+            self.Table_Select_SQL()
+        if sel_db == "Maestre":
+            memora_page = "Maestre"
+            self.Table_Select_SQL()
+        if sel_db == "Libri":
+            memora_page = "Libri"
+            self.Table_Select_SQL()
+        if sel_db == "Prestiti":
+            memora_page = "Prestiti"
+            self.Table_Select_SQL()
 
     def Table_Select_SQL(self):
-        global type_modifica
-        sel_db = self.comboBox.currentText()
-        if(sel_db == "Bambini"):
+        global type_modifica, memora_page
+        if(memora_page == "Bambini"):
             self.Show_Table(cndb.show_client())
             self.Parametro_ricerca.clear()
             self.Parametro_ricerca.addItem("tutto")
@@ -1686,9 +1857,12 @@ class MainWindow(QtWidgets.QMainWindow):
             self.tableView.setHorizontalHeaderLabels(colum_text)
             colum_text = ["ID","COGNOME","NOME","CLASSE","ANNI","FOTO"]
             self.tableView.setHorizontalHeaderLabels(colum_text)
+            self.Elimina.setEnabled(True)
+            self.Salva_modifice.setEnabled(True)
             type_modifica = 0
+            memora_page = "Bambini"
             return 0
-        if(sel_db == "Maestre"):
+        if(memora_page == "Maestre"):
             self.Show_Table(cndb.show_admin())
             self.Parametro_ricerca.clear()
             self.Parametro_ricerca.addItem("tutto")
@@ -1698,9 +1872,12 @@ class MainWindow(QtWidgets.QMainWindow):
             self.tableView.setHorizontalHeaderLabels(colum_text)
             colum_text = ["ID","COGNOME","NOME","AMMINISTRETORE",]
             self.tableView.setHorizontalHeaderLabels(colum_text)
+            self.Elimina.setEnabled(True)
+            self.Salva_modifice.setEnabled(True)
             type_modifica = 1
+            memora_page = "Maestre"
             return 0
-        if(sel_db == "Libri"):
+        if(memora_page == "Libri"):
             self.Show_Table(cndb.show_book())
             self.Parametro_ricerca.clear()
             self.Parametro_ricerca.addItem("tutto")
@@ -1711,18 +1888,25 @@ class MainWindow(QtWidgets.QMainWindow):
             self.tableView.setHorizontalHeaderLabels(colum_text)
             colum_text = ["ID","TITOLO","AUTORE","GENERE","COVER","DISPONILE"]
             self.tableView.setHorizontalHeaderLabels(colum_text)
+            self.Elimina.setEnabled(True)
+            self.Salva_modifice.setEnabled(True)
             type_modifica = 2
+            memora_page = "Libri"
             return 0
-        if(sel_db == "Prestiti"):
+        if(memora_page == "Prestiti"):
             self.Show_Table(cndb.show_logs_book())
             colum_text = ["","","","","",""]
             self.tableView.setHorizontalHeaderLabels(colum_text)
             colum_text = ["ID","BAMBINO","LIBRO","DATA PRESTITO","DATA RESTITUITO"]
             self.tableView.setHorizontalHeaderLabels(colum_text)
+            self.Elimina.setDisabled(True)
+            self.Salva_modifice.setDisabled(True)
+            memora_page = "Prestiti"
             return 0
         else:
             print("ERROR")
         cndb.close_db()
+       
               
     def Show_Table(self, table):
         result = table
@@ -1735,7 +1919,7 @@ class MainWindow(QtWidgets.QMainWindow):
         cndb.close_db()
     
     def modifica(self):
-        global type_modifica, active_mod, id_bimbo, id_Maestra, id_libro
+        global type_modifica, active_mod, id_bimbo, id_Maestra, id_libro, admin
         if(self.tableView.currentItem()== None):
             return "errore"
         id_linea = self.tableView.currentItem().row()
@@ -1744,15 +1928,26 @@ class MainWindow(QtWidgets.QMainWindow):
         if(type_modifica == 0):
             id_bimbo = id_Finale
             self.inserimento_new_profilo_C()
-        elif(type_modifica == 1):
-            id_Maestra = id_Finale
-            self.inserimento_new_profilo_A()
         elif(type_modifica == 2):
             id_libro = id_Finale
             self.Inserimeto_libri()
+        elif(type_modifica == 1):
+            if(admin == True):
+                id_Maestra = id_Finale
+                self.inserimento_new_profilo_A()
+            else:
+                msgBox = QtWidgets.QMessageBox()
+                msgBox.setWindowTitle("AVVISO")
+                msgBox.setWindowIcon(QtGui.QIcon("Icons/iconfinder_ic_info_48px_3669162.png"))
+                msgBox.setText("Non hai il permesso di effetura questa operazione")
+                msgBox.setInformativeText("")
+                msgBox.setIcon(QtWidgets.QMessageBox.Warning)
+                msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                msgBox.exec_()
         else:
             print("ERRORE")
-    
+        
+            
     def cerca_per(self):
         global type_modifica
         selc = self.Parametro_key.text()
@@ -1817,14 +2012,59 @@ class MainWindow(QtWidgets.QMainWindow):
             reply = msgBox.exec_()
             if reply == QtWidgets.QMessageBox.Yes:
                 if(type_modifica == 0):
-                    cndb.delete_id_client(id_Finale)
+                    mesag = cndb.delete_id_client(id_Finale)
+                    if mesag == 1:            
+                        mes =QtWidgets.QMessageBox()
+                        mes.setWindowTitle("Operazione Completata")
+                        mes.setText("Profilo Bimbo Eliminato")
+                        mes.setIcon(QtWidgets.QMessageBox.Information)
+                        mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                        mes.exec_()
+                    else:
+                        mes =QtWidgets.QMessageBox()
+                        mes.setWindowTitle("ERRORE")
+                        mes.setText("Qualcosa è andato storto")
+                        mes.setIcon(QtWidgets.QMessageBox.Critical)
+                        mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                        mes.exec_()
                     self.Show_Table(cndb.show_client())
+                    type_modifica = 0
                 elif(type_modifica == 1):
-                    cndb.delete_id_admin(id_Finale)
+                    mesag = cndb.delete_id_admin(id_Finale)
+                    if mesag == 1:            
+                        mes =QtWidgets.QMessageBox()
+                        mes.setWindowTitle("Operazione Completata")
+                        mes.setText("Profilo Maestra Eliminato")
+                        mes.setIcon(QtWidgets.QMessageBox.Information)
+                        mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                        mes.exec_()
+                    else:
+                        mes =QtWidgets.QMessageBox()
+                        mes.setWindowTitle("ERRORE")
+                        mes.setText("Qualcosa è andato storto")
+                        mes.setIcon(QtWidgets.QMessageBox.Critical)
+                        mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                        mes.exec_()
                     self.Show_Table(cndb.show_admin())
+                    type_modifica = 1
                 elif(type_modifica == 2):
-                    cndb.delete_id_book(id_Finale)
+                    mesag = cndb.delete_id_book(id_Finale)
+                    if mesag == 1:            
+                        mes =QtWidgets.QMessageBox()
+                        mes.setWindowTitle("Operazione Completata")
+                        mes.setText("Libro Eliminato")
+                        mes.setIcon(QtWidgets.QMessageBox.Information)
+                        mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                        mes.exec_()
+                    else:
+                        mes =QtWidgets.QMessageBox()
+                        mes.setWindowTitle("ERRORE")
+                        mes.setText("Qualcosa è andato storto")
+                        mes.setIcon(QtWidgets.QMessageBox.Critical)
+                        mes.setStandardButtons(QtWidgets.QMessageBox.Ok)
+                        mes.exec_()
                     self.Show_Table(cndb.show_book())
+                    type_modifica = 2
         else:
             msgBox = QtWidgets.QMessageBox()
             msgBox.setWindowTitle("AVVISO")

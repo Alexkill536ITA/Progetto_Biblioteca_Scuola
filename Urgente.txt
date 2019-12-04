@@ -1,0 +1,3 @@
+/sistemare le modifiche 
+/aggugere i mesaggi di avviso di sucesso o errore
+/img Cover da rivedere 

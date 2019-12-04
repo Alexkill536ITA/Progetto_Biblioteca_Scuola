@@ -48,10 +48,10 @@ Source: "F:\1 - Programmazione\Progetto Biblioteca Scuola\Out\Gestione Bibliotec
 Source: "F:\1 - Programmazione\Progetto Biblioteca Scuola\Out\Gestione Biblioteca\d3dcompiler_47.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "F:\1 - Programmazione\Progetto Biblioteca Scuola\Out\Gestione Biblioteca\Gestione Biblioteca.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
 Source: "F:\1 - Programmazione\Progetto Biblioteca Scuola\Out\Gestione Biblioteca\Icon.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "F:\1 - Programmazione\Progetto Biblioteca Scuola\Out\Gestione Biblioteca\libcrypto-1_1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "F:\1 - Programmazione\Progetto Biblioteca Scuola\Out\Gestione Biblioteca\libcrypto-1_1-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "F:\1 - Programmazione\Progetto Biblioteca Scuola\Out\Gestione Biblioteca\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "F:\1 - Programmazione\Progetto Biblioteca Scuola\Out\Gestione Biblioteca\libGLESv2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "F:\1 - Programmazione\Progetto Biblioteca Scuola\Out\Gestione Biblioteca\libssl-1_1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "F:\1 - Programmazione\Progetto Biblioteca Scuola\Out\Gestione Biblioteca\libssl-1_1-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "F:\1 - Programmazione\Progetto Biblioteca Scuola\Out\Gestione Biblioteca\MSVCP140.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "F:\1 - Programmazione\Progetto Biblioteca Scuola\Out\Gestione Biblioteca\opengl32sw.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "F:\1 - Programmazione\Progetto Biblioteca Scuola\Out\Gestione Biblioteca\pyexpat.pyd"; DestDir: "{app}"; Flags: ignoreversion
