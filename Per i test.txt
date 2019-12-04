@@ -16,7 +16,7 @@
 |-----------------------------------|
 |                                   |
 |Profili da utilizare per i test:   |
-|Usa il copia incolla		            |
+|Usa il copia incolla|
 |                                   |
 |             Nome    Password      |
 |Maestre   =  admin   1234          |
