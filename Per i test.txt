@@ -1,0 +1,67 @@
+|-----------------------------------|
+|                                   |
+|Conssigli segnare se possiblie le  |
+|proprie azioni che si compiono     |
+|nel report                         |
+|                                   |
+|-----------------------------------|
+|                                   |
+|Istruzioni di base andare nella    |
+|cartella:                          |
+|Out/Gestione Biblioteca            |
+|                                   |
+|Esegurire il programma:            |
+|Gestione Biblioteca.exe            |
+|                                   |
+|-----------------------------------|
+|                                   |
+|Profili da utilizare per i test:   |
+|Usa il copia incolla               |
+|                                   |
+|             Nome    Password      |
+|Maestre   =  admin   1234          |
+|                                   |
+|             Nome    Cognome       |
+|Bambino 1 =  GIULIA  BOASSO        |
+|                                   |
+|Bambino 2 =  NICOLA  MONTAGNA      |
+|                                   |
+|-----------------------------------|
+|                                   |
+|Test 1: Prova il login come Maestra|
+|e come Bambino                     |
+|                                   |
+|Funzionate SI/NO?:                 |
+|Report errore:                     |
+|
+|
+|
+|
+|-----------------------------------|
+|                                   |
+|Test 2: Entrare come bambino e     |
+|provare a prendere 5 libri         |
+|                                   |
+|Funzionate SI/NO?:                 |
+|Report errore:                     |
+|
+|
+|
+|
+|-----------------------------------|
+|                                   |
+|Test 3: Entrare come bambino e     | 
+|provare a restituire i 5 libri     |
+|                                   |
+|Funzionate SI/NO?:                 |
+|Report errore:                     |
+|
+|
+|
+|
+|-----------------------------------|
+|                                   |
+|Se si riscontrano altri problemi   |
+|segnalarli qui soto                |
+|                                   |
+|Report errore:                     |
