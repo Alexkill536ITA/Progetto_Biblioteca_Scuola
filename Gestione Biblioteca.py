@@ -542,55 +542,54 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_INT = []
         self.Id_INT = []
         self.Id_log_INT = []
-        self.data_2_1 = []
-        for z in range(len(data_2)):
-            if data_2[z][4] == None:
-                self.data_2_1.append(str(data_2[z][2]))
-
-        for y in range(len(self.data_2_1)):
-            result_3 = cndb.show_book_by_ID(self.data_2_1[y])
-            data_3 = tuple(result_3.fetchall())
-            self.NUM_BOX_INT.insert(y,QtWidgets.QHBoxLayout())
-            self.NUM_BOX_INT[y].setObjectName("BOX_INT_"+str(y))
-            self.Cover_INT.insert(y, QtWidgets.QLabel(self.scrollAreaWidgetContents_INT))
-            self.Cover_INT[y].setMinimumSize(QtCore.QSize(160, 0))
-            self.Cover_INT[y].setMaximumSize(QtCore.QSize(160, 95))
-            self.Cover_INT[y].setStyleSheet("background-color:white;")
-            self.Cover_INT[y].setText("")
-            self.Cover_INT[y].setObjectName("Cover_INT_"+str(y))
-            self.Cover_INT[y].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-            if(data_3[0][4] == None):
-                img = "Icons/book.png"
-            else:
-                img = Root+data_3[0][4]
-            self.Cover_INT[y].setPixmap(QtGui.QPixmap(img))
-            self.Cover_INT[y].setScaledContents(True)
-            self.NUM_BOX_INT[y].addWidget(self.Cover_INT[y])
-            self.label_INT.insert(y, QtWidgets.QLabel(self.scrollAreaWidgetContents_INT))
-            self.label_INT[y].setMinimumSize(QtCore.QSize(170, 50))
-            self.label_INT[y].setMaximumSize(QtCore.QSize(16777215, 95))
-            self.label_INT[y].setObjectName("label_INT_"+str(y))
-            self.label_INT[y].setText(data_3[0][1])
-            self.NUM_BOX_INT[y].addWidget(self.label_INT[y])
-            self.Id_INT.insert(y, QtWidgets.QLabel(self.scrollAreaWidgetContents_DSP))
-            self.Id_INT[y].setMinimumSize(QtCore.QSize(16777215, 50))
-            self.Id_INT[y].setMaximumSize(QtCore.QSize(16777215, 95))
-            self.Id_INT[y].setObjectName("Id_INT"+str(y))
-            self.Id_INT[y].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-            self.Id_INT[y].setText(str(data_3[0][0]))
-            self.NUM_BOX_INT[y].addWidget(self.Id_INT[y])
-            self.Id_log_INT.insert(y, QtWidgets.QLabel(self.scrollAreaWidgetContents_DSP))
-            self.Id_log_INT[y].setMinimumSize(QtCore.QSize(16777215, 50))
-            self.Id_log_INT[y].setMaximumSize(QtCore.QSize(16777215, 95))
-            self.Id_log_INT[y].setObjectName("Id_Log_INT"+str(self.data_2_1[y][0]))
-            self.Id_log_INT[y].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-            self.Id_log_INT[y].setText(str(self.data_2_1[y][0]))
-            self.NUM_BOX_INT[y].addWidget(self.Id_log_INT[y])
-            self.verticalLayout_5.addLayout(self.NUM_BOX_INT[y])
-            clickable(self.Cover_INT[y]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[y],self.Id_log_INT[y]))
-            clickable(self.label_INT[y]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[y],self.Id_log_INT[y]))
-            clickable(self.Id_INT[y]).connect(lambda y=y: self.Get_Id_Libro_INT(self.Id_INT[y],self.Id_log_INT[y]))
-        cndb.close_db()
+        count = 0
+        
+        for y in range(len(data_2)):
+            if data_2[y][4] == None:
+                result_3 = cndb.show_book_by_ID(str(data_2[y][2]))
+                data_3 = tuple(result_3.fetchall())
+                self.NUM_BOX_INT.insert(count,QtWidgets.QHBoxLayout())
+                self.NUM_BOX_INT[count].setObjectName("BOX_INT_"+str(count))
+                self.Cover_INT.insert(count, QtWidgets.QLabel(self.scrollAreaWidgetContents_INT))
+                self.Cover_INT[count].setMinimumSize(QtCore.QSize(160, 0))
+                self.Cover_INT[count].setMaximumSize(QtCore.QSize(160, 95))
+                self.Cover_INT[count].setStyleSheet("background-color:white;")
+                self.Cover_INT[count].setText("")
+                self.Cover_INT[count].setObjectName("Cover_INT_"+str(count))
+                self.Cover_INT[count].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+                if(data_3[0][4] == None):
+                    img = "Icons/book.png"
+                else:
+                    img = Root+data_3[0][4]
+                self.Cover_INT[count].setPixmap(QtGui.QPixmap(img))
+                self.Cover_INT[count].setScaledContents(True)
+                self.NUM_BOX_INT[count].addWidget(self.Cover_INT[count])
+                self.label_INT.insert(count, QtWidgets.QLabel(self.scrollAreaWidgetContents_INT))
+                self.label_INT[count].setMinimumSize(QtCore.QSize(170, 50))
+                self.label_INT[count].setMaximumSize(QtCore.QSize(16777215, 95))
+                self.label_INT[count].setObjectName("label_INT_"+str(count))
+                self.label_INT[count].setText(data_3[0][1])
+                self.NUM_BOX_INT[count].addWidget(self.label_INT[count])
+                self.Id_INT.insert(count, QtWidgets.QLabel(self.scrollAreaWidgetContents_DSP))
+                self.Id_INT[count].setMinimumSize(QtCore.QSize(16777215, 50))
+                self.Id_INT[count].setMaximumSize(QtCore.QSize(16777215, 95))
+                self.Id_INT[count].setObjectName("Id_INT"+str(count))
+                self.Id_INT[count].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+                self.Id_INT[count].setText(str(data_3[0][0]))
+                self.NUM_BOX_INT[count].addWidget(self.Id_INT[count])
+                self.Id_log_INT.insert(count, QtWidgets.QLabel(self.scrollAreaWidgetContents_DSP))
+                self.Id_log_INT[count].setMinimumSize(QtCore.QSize(16777215, 50))
+                self.Id_log_INT[count].setMaximumSize(QtCore.QSize(16777215, 95))
+                self.Id_log_INT[count].setObjectName("Id_Log_INT"+str(data_2[y][0]))
+                self.Id_log_INT[count].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+                self.Id_log_INT[count].setText(str(data_2[y][0]))
+                self.NUM_BOX_INT[count].addWidget(self.Id_log_INT[count])
+                self.verticalLayout_5.addLayout(self.NUM_BOX_INT[count])
+                clickable(self.Cover_INT[count]).connect(lambda count=count: self.Get_Id_Libro_INT(self.Id_INT[count],self.Id_log_INT[count]))
+                clickable(self.label_INT[count]).connect(lambda count=count: self.Get_Id_Libro_INT(self.Id_INT[count],self.Id_log_INT[count]))
+                clickable(self.Id_INT[count]).connect(lambda count=count: self.Get_Id_Libro_INT(self.Id_INT[count],self.Id_log_INT[count]))
+                count = count+1
+            cndb.close_db()
 
     #Seletore Libri Disponibili    
         result_4 = cndb.show_book_Disponibili()
@@ -635,7 +634,6 @@ class MainWindow(QtWidgets.QMainWindow):
             clickable(self.NUM_Cover_DSP[x]).connect(lambda x=x: self.Get_Id_Libro(self.NUM_Id_DSP[x]))
             clickable(self.NUM_Label_DSP[x]).connect(lambda x=x: self.Get_Id_Libro(self.NUM_Id_DSP[x]))
             clickable(self.NUM_Id_DSP[x]).connect(lambda x=x: self.Get_Id_Libro(self.NUM_Id_DSP[x]))
-
         cndb.close_db()
         
         self.centralWidget().setLayout(self.gridLayout)
