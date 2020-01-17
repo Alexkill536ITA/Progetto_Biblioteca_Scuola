@@ -1,6 +1,15 @@
+###############################################################################
+#                                                                             #
+#                           Modulo Connesione DataBase                        #
+#                           Crato da Alizzi Alessandro                        #
+#                           Copyright By Bjarka Energy®                       #
+#                                                                             #
+###############################################################################
+
 import sys
 import os
 import time
+import threading
 from PyQt5 import *
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5 import QtWidgets, QtGui, QtCore
@@ -1023,6 +1032,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def getAvatar(self):
         global New_Patch_avatar,Root
+        New_Patch_avatar = ""
         options = QFileDialog.Options()
         img,_ = QFileDialog.getOpenFileName(None, 'QFileDialog.getOpenFileName()', '', 'Images (*.png *.jpeg *.jpg *.bmp *.gif)', options=options)
         if img != "":    
@@ -1235,7 +1245,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.Edit_titolo.clear()
         self.Edit_autore.clear()
-        self.caricafotoprofilo.setText("carica foto profilo")
+        self.caricafotoprofilo.setText("carica foto Cover libro")
         self.Edit_titolo.setPlaceholderText("Titolo")
         self.Edit_autore.setPlaceholderText("autore")
         self.Edit_disponibilita.setText("Disponibile")
@@ -1250,6 +1260,7 @@ class MainWindow(QtWidgets.QMainWindow):
     
     def getCover(self):
         global New_Patch_Cover
+        New_Patch_Cover = ""
         options = QFileDialog.Options()
         img,_ = QFileDialog.getOpenFileName(None, 'QFileDialog.getOpenFileName()', '', 'Images (*.png *.jpeg *.jpg *.bmp *.gif)', options=options)
         if img != "":
@@ -2074,6 +2085,7 @@ class MainWindow(QtWidgets.QMainWindow):
             msgBox.exec_()
         
 #richiamo della classe MainWindow, apertura della finestra, e stile
+cndb.backup_db_start()
 app = QtWidgets.QApplication(sys.argv)
 app.setStyle("Fusion")
 a_window = MainWindow()
